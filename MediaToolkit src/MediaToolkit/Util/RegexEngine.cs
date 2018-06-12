@@ -21,7 +21,7 @@ namespace MediaToolkit.Util
             {Find.ConvertProgressFrame, new Regex(@"frame=\s*([0-9]*)")},
             {Find.ConvertProgressFps, new Regex(@"fps=\s*([0-9]*\.?[0-9]*?)")},
             {Find.ConvertProgressSize, new Regex(@"size=\s*([0-9]*)kB")},
-            {Find.ConvertProgressFinished, new Regex(@"Lsize=\s*([0-9]*)kB")},
+            {Find.ConvertProgressFinished, new Regex(@"(No more output streams to write to, finishing\.)")},
             {Find.ConvertProgressTime, new Regex(@"time=\s*([^ ]*)")},
             {Find.ConvertProgressBitrate, new Regex(@"bitrate=\s*([0-9]*\.?[0-9]*?)kbits/s")},
             {Find.MetaAudio, new Regex(@"(Stream\s*#[0-9]*:[0-9]*\(?[^\)]*?\)?: Audio:.*)")},
@@ -124,17 +124,17 @@ namespace MediaToolkit.Util
             Match matchFinished = Index[Find.ConvertProgressFinished].Match(data);
             Match matchTime = Index[Find.ConvertProgressTime].Match(data);
             Match matchBitrate = Index[Find.ConvertProgressBitrate].Match(data);
+            Match matchSize = Index[Find.ConvertProgressSize].Match(data);
 
-            if (!matchFrame.Success || !matchFps.Success || !matchFinished.Success || !matchTime.Success ||
-                !matchBitrate.Success) return false;
+            if (!matchFinished.Success) return false;
 
             TimeSpan processedDuration;
             TimeSpan.TryParse(matchTime.Groups[1].Value, out processedDuration);
 
-            long frame = Convert.ToInt64(matchFrame.Groups[1].Value, CultureInfo.InvariantCulture);
-            double fps = Convert.ToDouble(matchFps.Groups[1].Value, CultureInfo.InvariantCulture);
-            int sizeKb = Convert.ToInt32(matchFinished.Groups[1].Value, CultureInfo.InvariantCulture);
-            double bitrate = Convert.ToDouble(matchBitrate.Groups[1].Value, CultureInfo.InvariantCulture);
+            long? frame = GetLongValue(matchFrame);
+            double? fps = GetDoubleValue(matchFps);
+            int? sizeKb = GetIntValue(matchSize);
+            double? bitrate = GetDoubleValue(matchBitrate);
 
             conversionCompleteEvent = new ConversionCompleteEventArgs(processedDuration, TimeSpan.Zero, frame, fps, sizeKb, bitrate);
 

@@ -215,3 +215,8 @@ pip-log.txt
 .mr.developer.cfg
 
 TestVideo/
+/MediaToolkit src/.vs/MediaToolkit/v15/Server/sqlite3/db.lock
+/MediaToolkit src/.vs/MediaToolkit/v15/Server/sqlite3
+/MediaToolkit src/MediaToolkit/Resources/FFmpeg.exe
+/MediaToolkit src/MediaToolkit/MediaToolkit.zip
+/MediaToolkit src/packages/Moq.4.2.1510.2205

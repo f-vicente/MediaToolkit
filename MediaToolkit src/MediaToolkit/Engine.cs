@@ -153,7 +153,7 @@
             {
                 return new ProcessStartInfo
                 {
-                    Arguments = "-nostdin -y -loglevel info " + arguments,
+                    Arguments = "-nostdin -y -loglevel verbose " + arguments,
                     FileName = this.FFmpegFilePath,
                     CreateNoWindow = true,
                     RedirectStandardInput = false,

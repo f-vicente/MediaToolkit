@@ -215,6 +215,7 @@ pip-log.txt
 .mr.developer.cfg
 
 TestVideo/
+/MediaToolkit src/packages
 /MediaToolkit src/.vs/MediaToolkit/v15/Server/sqlite3/db.lock
 /MediaToolkit src/.vs/MediaToolkit/v15/Server/sqlite3
 /MediaToolkit src/MediaToolkit/Resources/FFmpeg.exe
